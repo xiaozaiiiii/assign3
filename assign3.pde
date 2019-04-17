@@ -1,5 +1,6 @@
 final int GAME_START = 0, GAME_RUN = 1, GAME_OVER = 2;
 int gameState = 0;
+int grid = 80;
 
 final int GRASS_HEIGHT = 15;
 final int START_BUTTON_W = 144;
@@ -8,7 +9,9 @@ final int START_BUTTON_X = 248;
 final int START_BUTTON_Y = 360;
 
 PImage title, gameover, startNormal, startHovered, restartNormal, restartHovered;
-PImage bg, soil8x24;
+PImage bg;
+PImage soil0, soil1, soil2, soil3, soil4, soil5;
+PImage stone1, stone2;
 
 // For debug function; DO NOT edit or remove this!
 int playerHealth = 0;
@@ -19,13 +22,23 @@ void setup() {
 	size(640, 480, P2D);
 	// Enter your setup code here (please put loadImage() here or your game will lag like crazy)
 	bg = loadImage("img/bg.jpg");
-	title = loadImage("img/title.jpg");
+	
+  title = loadImage("img/title.jpg");
 	gameover = loadImage("img/gameover.jpg");
 	startNormal = loadImage("img/startNormal.png");
 	startHovered = loadImage("img/startHovered.png");
 	restartNormal = loadImage("img/restartNormal.png");
 	restartHovered = loadImage("img/restartHovered.png");
-	soil8x24 = loadImage("img/soil8x24.png");
+	
+  soil0 = loadImage("img/soil0.png");
+  soil1 = loadImage("img/soil1.png");
+  soil2 = loadImage("img/soil2.png");
+  soil3 = loadImage("img/soil3.png");
+  soil4 = loadImage("img/soil4.png");
+  soil5 = loadImage("img/soil5.png");
+  
+  stone1 = loadImage("img/stone1.png");
+  stone2 = loadImage("img/stone2.png");
 }
 
 void draw() {
@@ -82,8 +95,53 @@ void draw() {
 		rect(0, 160 - GRASS_HEIGHT, width, GRASS_HEIGHT);
 
 		// Soil - REPLACE THIS PART WITH YOUR LOOP CODE!
-		image(soil8x24, 0, 160);
-
+		for(int x = 0; x < width; x += grid){
+      for(int y = 160; y < grid*6 ; y += grid){image(soil0, x, y);}
+      for(int y = grid*6; y < grid*10 ; y += grid){image(soil1, x, y);}
+      for(int y = grid*10; y < grid*14 ; y += grid){image(soil2, x, y);}
+      for(int y = grid*14; y < grid*18 ; y += grid){image(soil3, x, y);}
+      for(int y = grid*18; y < grid*22 ; y += grid){image(soil4, x, y);}
+      for(int y = grid*22; y < grid*26 ; y += grid){image(soil5, x, y);}
+    }
+    
+    //Stone1-8
+    for(int x = 0, y = 160, i = 0; i < 8; i++){
+      x = i*grid;
+      image(stone1,x,y);
+      y += grid;
+    }
+    //Stone9-16
+    for(int x = 0, y = 960, i = 0; i < 6; i+=1){
+      x = i*grid;
+      image(stone1,x,y);
+      image(stone1,width-grid-x,y);
+      y += grid;
+    }
+    for(int x = 160, y = 800, i = 0; i < 6; i+=1){
+      x = 160 + i*grid;
+      image(stone1,x,y);
+      image(stone1,width-grid-x,y);
+      y += grid;
+    }
+    for(int x = 0, y = 1280, i = 0; i < 2; i+=1){
+      x = i*grid;
+      image(stone1,x,y);
+      image(stone1,width-grid-x,y);
+      y += grid;
+    }
+    for(int x = 480, y = 800, i = 0; i < 2; i+=1){
+      x = 480 + i*grid;
+      image(stone1,x,y);
+      image(stone1,width-grid-x,y);
+      y += grid;
+    }
+    //Stone17-24
+    for(int x = 480, y = 800, i = 0; i < 2; i+=1){
+      x = 480 + i*grid;
+      image(stone1,x,y);
+      image(stone1,width-grid-x,y);
+      y += grid;
+    }
 		// Player
 
 		// Health UI
