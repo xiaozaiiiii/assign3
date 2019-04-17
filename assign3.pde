@@ -207,7 +207,7 @@ void draw() {
     }
     //groundhog
        
-      image(groundhog,groundhogX,groundhogY);
+      //image(groundhog,groundhogX,groundhogY);
       switch(movement){
         case STOP:
           groundhog = loadImage("img/groundhogIdle.png");
