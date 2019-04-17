@@ -8,10 +8,22 @@ final int START_BUTTON_H = 60;
 final int START_BUTTON_X = 248;
 final int START_BUTTON_Y = 360;
 
+final int STOP = 0;
+final int DOWNWARD = 1;
+final int LEFTWARD = 2;
+final int RIGHTWARD = 3;
+int movement = STOP;
+
 PImage title, gameover, startNormal, startHovered, restartNormal, restartHovered;
 PImage bg;
 PImage soil0, soil1, soil2, soil3, soil4, soil5;
 PImage stone1, stone2;
+PImage life;
+PImage groundhog;
+
+float groundhogX = 320;
+float groundhogY = 80;
+float groundhogSpeed = 5;
 
 // For debug function; DO NOT edit or remove this!
 int playerHealth = 0;
@@ -22,7 +34,8 @@ void setup() {
 	size(640, 480, P2D);
 	// Enter your setup code here (please put loadImage() here or your game will lag like crazy)
 	bg = loadImage("img/bg.jpg");
-	
+	life = loadImage("img/life.png");
+
   title = loadImage("img/title.jpg");
 	gameover = loadImage("img/gameover.jpg");
 	startNormal = loadImage("img/startNormal.png");
@@ -39,6 +52,7 @@ void setup() {
   
   stone1 = loadImage("img/stone1.png");
   stone2 = loadImage("img/stone2.png");
+  
 }
 
 void draw() {
@@ -136,15 +150,107 @@ void draw() {
       y += grid;
     }
     //Stone17-24
-    for(int x = 480, y = 800, i = 0; i < 2; i+=1){
+    for(int x = 0, y = 1520, i = 0; i < 2; i+=1){
+      x = i*grid;
+      image(stone1,x,y);
+      y -= grid;
+    }
+    for(int x = 0, y = 1600, i = 0; i < 3; i+=1){
+      x = i*grid;
+      image(stone1,x,y);
+      image(stone2,x,y);
+      y -= grid;
+    }
+    for(int x = 0, y = 1760, i = 0; i < 5; i+=1){
+      x = i*grid;
+      image(stone1,x,y);
+      y -= grid;
+    }
+    for(int x = 0, y = 1840, i = 0; i < 6; i+=1){
+      x = i*grid;
+      image(stone1,x,y);
+      image(stone2,x,y);
+      y -= grid;
+    }
+    for(int x = 0, y = 2000, i = 0; i < 8; i+=1){
+      x = i*grid;
+      image(stone1,x,y);
+      y -= grid;
+    }
+    for(int x = 80, y = 2000, i = 0; i < 7; i+=1){
+      x = 80 + i*grid;
+      image(stone1,x,y);
+      image(stone2,x,y);
+      y -= grid;
+    }
+    for(int x = 240, y = 2000, i = 0; i < 5; i+=1){
+      x = 240 + i*grid;
+      image(stone1,x,y);
+      y -= grid;
+    }
+    for(int x = 320, y = 2000, i = 0; i < 4; i+=1){
+      x = 320 + i*grid;
+      image(stone1,x,y);
+      image(stone2,x,y);
+      y -= grid;
+    }
+    for(int x = 480, y = 2000, i = 0; i < 2; i+=1){
       x = 480 + i*grid;
       image(stone1,x,y);
-      image(stone1,width-grid-x,y);
-      y += grid;
+      y -= grid;
     }
+    for(int x = 560, y = 2000, i = 0; i < 1; i+=1){
+      x = 560 + i*grid;
+      image(stone1,x,y);
+      image(stone2,x,y);
+      y -= grid;
+    }
+    //groundhog
+       
+      image(groundhog,groundhogX,groundhogY);
+      switch(movement){
+        case STOP:
+          groundhog = loadImage("img/groundhogIdle.png");
+          groundhogY += 0;
+        break;
+        
+        case DOWNWARD:
+          groundhogY += groundhogSpeed;
+          groundhog = loadImage("img/groundhogDown.png");
+          if(groundhogY % 80 == 0){
+            movement = STOP;
+          }
+        break;
+        
+        case LEFTWARD:
+          groundhogX -= groundhogSpeed;
+          groundhog = loadImage("img/groundhogLeft.png");
+          if(groundhogX % 80 == 0){
+            movement = STOP;
+          }
+        break;
+        
+        case RIGHTWARD:
+          groundhogX += groundhogSpeed;
+          groundhog = loadImage("img/groundhogRight.png");
+          if(groundhogX % 80 == 0){
+            movement = STOP;
+          }
+        break;
+        }
+    
 		// Player
 
 		// Health UI
+    for(int x = 290, y = 10; playerHealth <5 ; playerHealth++){
+      image(life,x - 70 *playerHealth,y);
+      image(life,x - 70 *(playerHealth+1),y);
+      image(life,x - 70 *(playerHealth+2),y);
+      image(life,x - 70 *(playerHealth+3),y);
+      image(life,x - 70 *(playerHealth+4),y);
+      break;
+      
+    }
 
 		break;
 
