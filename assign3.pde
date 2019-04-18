@@ -1,6 +1,7 @@
 final int GAME_START = 0, GAME_RUN = 1, GAME_OVER = 2;
 int gameState = 0;
 int grid = 80;
+int transY = 0;
 
 final int GRASS_HEIGHT = 15;
 final int START_BUTTON_W = 144;
@@ -19,11 +20,13 @@ PImage bg;
 PImage soil0, soil1, soil2, soil3, soil4, soil5;
 PImage stone1, stone2;
 PImage life;
-PImage groundhog;
+PImage groundhogImg;
 
-float groundhogX = 320;
-float groundhogY = 80;
+float groundhogX;
+float groundhogY;
 float groundhogSpeed = 5;
+float groundhogWidth = 80;
+float groundhogHeight = 80;
 
 // For debug function; DO NOT edit or remove this!
 int playerHealth = 0;
@@ -53,6 +56,8 @@ void setup() {
   stone1 = loadImage("img/stone1.png");
   stone2 = loadImage("img/stone2.png");
   
+  groundhogX = 320;
+  groundhogY = 80;
 }
 
 void draw() {
@@ -98,11 +103,14 @@ void draw() {
 		image(bg, 0, 0);
 
 		// Sun
-	    stroke(255,255,0);
-	    strokeWeight(5);
-	    fill(253,184,19);
-	    ellipse(590,50,120,120);
+	  stroke(255,255,0);
+	  strokeWeight(5);
+    fill(253,184,19);
+    ellipse(590,50,120,120);
 
+    pushMatrix();
+    translate(0,transY);
+    
 		// Grass
 		fill(124, 204, 25);
 		noStroke();
@@ -205,18 +213,30 @@ void draw() {
       image(stone2,x,y);
       y -= grid;
     }
+    popMatrix();
+    
     //groundhog
-       
-      //image(groundhog,groundhogX,groundhogY);
       switch(movement){
         case STOP:
-          groundhog = loadImage("img/groundhogIdle.png");
+          groundhogImg = loadImage("img/groundhogIdle.png");
+          pushMatrix();
+          translate(0,transY-5);
+          image(groundhogImg,groundhogX,groundhogY);
+          popMatrix();
           groundhogY += 0;
         break;
         
         case DOWNWARD:
           groundhogY += groundhogSpeed;
-          groundhog = loadImage("img/groundhogDown.png");
+          groundhogImg = loadImage("img/groundhogDown.png");
+          pushMatrix();
+          translate(0,transY-5);
+          image(groundhogImg,groundhogX,groundhogY);
+          popMatrix();
+          transY -= groundhogSpeed;
+          if(transY >= 1600){
+            transY += 0;
+          }
           if(groundhogY % 80 == 0){
             movement = STOP;
           }
@@ -224,7 +244,11 @@ void draw() {
         
         case LEFTWARD:
           groundhogX -= groundhogSpeed;
-          groundhog = loadImage("img/groundhogLeft.png");
+          groundhogImg = loadImage("img/groundhogLeft.png");
+          pushMatrix();
+          translate(0,transY-5);
+          image(groundhogImg,groundhogX,groundhogY);
+          popMatrix();
           if(groundhogX % 80 == 0){
             movement = STOP;
           }
@@ -232,7 +256,11 @@ void draw() {
         
         case RIGHTWARD:
           groundhogX += groundhogSpeed;
-          groundhog = loadImage("img/groundhogRight.png");
+          groundhogImg = loadImage("img/groundhogRight.png");
+          pushMatrix();
+          translate(0,transY-5);
+          image(groundhogImg,groundhogX,groundhogY);
+          popMatrix();
           if(groundhogX % 80 == 0){
             movement = STOP;
           }
@@ -285,7 +313,25 @@ void draw() {
 
 void keyPressed(){
 	// Add your moving input code here
-
+  if(groundhogX % 80 == 0 && groundhogY % 80 == 0){
+    switch(keyCode){
+    case DOWN:
+      if(groundhogY + groundhogHeight < 2080){
+        movement = DOWNWARD;
+      }
+    break;
+    case RIGHT:
+      if(groundhogX + groundhogWidth < width){
+        movement = RIGHTWARD;
+      }
+    break;
+    case LEFT:
+      if(groundhogX > 0){
+        movement = LEFTWARD;
+      }
+    break;
+    }
+  }
 	// DO NOT REMOVE OR EDIT THE FOLLOWING SWITCH/CASES
     switch(key){
       case 'w':
