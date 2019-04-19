@@ -233,9 +233,10 @@ void draw() {
           translate(0,transY-5);
           image(groundhogImg,groundhogX,groundhogY);
           popMatrix();
-          transY -= groundhogSpeed;
-          if(transY >= 1600){
-            transY += 0;
+          if(groundhogY >= 1680){
+            transY -= 0;
+          }else{
+            transY -= groundhogSpeed;
           }
           if(groundhogY % 80 == 0){
             movement = STOP;
