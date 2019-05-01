@@ -58,6 +58,7 @@ void setup() {
   
   groundhogX = 320;
   groundhogY = 80;
+  playerHealth = 2;
 }
 
 void draw() {
@@ -271,12 +272,13 @@ void draw() {
 		// Player
 
 		// Health UI
-    for(int x = 290, y = 10; playerHealth <5 ; playerHealth++){
-      image(life,x - 70 *playerHealth,y);
-      image(life,x - 70 *(playerHealth+1),y);
-      image(life,x - 70 *(playerHealth+2),y);
-      image(life,x - 70 *(playerHealth+3),y);
-      image(life,x - 70 *(playerHealth+4),y);
+    
+    for(int x = 60, y = 10; playerHealth <6 ; playerHealth++){
+      image(life,70 *playerHealth - x,y);
+      image(life,70 *(playerHealth-1) - x,y);
+      image(life,70 *(playerHealth-2) - x,y);
+      image(life,70 *(playerHealth-3) - x,y);
+      image(life,70 *(playerHealth-4) - x,y);
       break;
       
     }
